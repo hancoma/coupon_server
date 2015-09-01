@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ratchet template page</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Include the compiled Ratchet CSS -->
+    <link href="css/ratchet.css" rel="stylesheet">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+ <link rel="stylesheet" href="css/uikit.gradient.css" />
+ <link rel="stylesheet" href="css/components/slider.gradient.css" />
+  <link rel="stylesheet" href="css/components/slidenav.gradient.css" />
+    <script src="js/uikit.js"></script>
+    <!-- Include the compiled Ratchet JS -->
+    <script src="js/ratchet.js"></script>
+  </head>
+  <body>
+<header class="bar bar-nav  uk-text-contrast">
+  <a class="icon icon-bars pull-left" data-uk-offcanvas="{target:'#app_left'}"></a>
+  <a class="icon icon-gear pull-right"></a>
+  <h1 class="title">쿠폰내놔</h1>
+</header>
+    <!-- Make sure all your bars are the first things in your <body> -->
+  
+    <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+    <div class="content" style="margin-top:10px;">
+        <div class="uk-grid data-uk-grid-match uk-grid-small uk-container-centeruk-grid-width-small-*">
+            <div class="uk-width-1-2 uk-text-center" onclick="category_view(0);">
+            <div class="uk-panel  uk-panel-box uk-panel-box-secondary  ">
+            <div class="uk-panel-badge uk-badge">hot</div>
+            <h3 class="uk-panel-title">전체메뉴</h3>
+            <img src="images/all_food.jpg">
+            </div>
+            </div>
+            <div class="uk-width-1-2 uk-text-center" onclick="category_view(1);">
+             <div class="uk-panel uk-panel-box uk-panel-box-secondary ">
+            <div class="uk-panel-badge uk-badge">hot</div>
+            <h3 class="uk-panel-title">치킨</h3>
+            <img src="images/chicken.jpg">
+            </div>
+            </div>
+        </div>
+        <div class="uk-grid data-uk-grid-match uk-grid-small uk-container-centeruk-grid-width-small-*">
+            <div class="uk-width-1-2 uk-text-center" onclick="category_view(2);">
+            <div class="uk-panel  uk-panel-box uk-panel-box-secondary  ">
+            <div class="uk-panel-badge uk-badge">hot</div>
+            <h3 class="uk-panel-title">피자/양식</h3>
+            <img src="images/pizza.jpg">
+            </div>
+            </div>
+            <div class="uk-width-1-2 uk-text-center" onclick="category_view(3);">
+             <div class="uk-panel uk-panel-box uk-panel-box-secondary ">
+            <div class="uk-panel-badge uk-badge">hot</div>
+            <h3 class="uk-panel-title">중국집</h3>
+            <img src="images/china.gif">
+            </div>
+            </div>
+        </div>
+        <div class="uk-grid data-uk-grid-match uk-grid-small uk-container-centeruk-grid-width-small-*">
+            <div class="uk-width-1-2 uk-text-center" onclick="category_view(4);">
+            <div class="uk-panel  uk-panel-box uk-panel-box-secondary  ">
+            <div class="uk-panel-badge uk-badge">hot</div>
+            <h3 class="uk-panel-title">족발 / 보쌈</h3>
+            <img src="images/menu4.jpg">
+            </div>
+            </div>
+            <div class="uk-width-1-2 uk-text-center" onclick="category_view(5);">
+             <div class="uk-panel uk-panel-box uk-panel-box-secondary ">
+            <div class="uk-panel-badge uk-badge">hot</div>
+            <h3 class="uk-panel-title">야식</h3>
+            <img src="images/menu6.jpg">
+            </div>
+            </div>
+        </div>
+           <div class="uk-grid data-uk-grid-match uk-grid-small uk-container-centeruk-grid-width-small-*">
+            <div class="uk-width-1-2 uk-text-center" onclick="category_view(6);">
+            <div class="uk-panel  uk-panel-box uk-panel-box-secondary  ">
+            <div class="uk-panel-badge uk-badge">hot</div>
+            <h3 class="uk-panel-title">분식</h3>
+            <img src="images/menu7.jpg">
+            </div>
+            </div>
+            <div class="uk-width-1-2 uk-text-center" onclick="category_view(7);">
+             <div class="uk-panel uk-panel-box uk-panel-box-secondary ">
+            <div class="uk-panel-badge uk-badge">hot</div>
+            <h3 class="uk-panel-title">프랜차이즈</h3>
+            <img src="images/menu8.jpg">
+            </div>
+            </div>
+
+        </div>
+        <button class="btn btn-negative btn-block" style="margin-bottom:100px; margin-top:20px;">더보기</button>
+    </div>
+<nav class="bar bar-tab">
+  <a class="tab-item active" href="/coupon/index.html">
+    <span class="icon icon-home"></span>
+    <span class="tab-label">Home</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-person"></span>
+    <span class="tab-label">마이페이지</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-star-filled"></span>
+    <span class="tab-label">찐한가게</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-search"></span>
+    <span class="tab-label">검색</span>
+  </a>
+  <a class="tab-item" href="#" data-uk-offcanvas="{target:'#my-id'}">
+    <span class="icon icon-gear"></span>
+    <span class="tab-label">세팅</span>
+  </a>
+</nav><!-- This is the off-canvas sidebar -->
+<div id="my-id" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <div class="uk-panel">
+  <? include "area.php"; ?>
+        </div>
+    </div>
+</div>
+// 어플 left
+<div id="app_left" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <div class="uk-panel">
+
+        </div>
+    </div>
+</div>
+
+  </body>
+</html>
+    <script src="js/coupon_main.js"></script>

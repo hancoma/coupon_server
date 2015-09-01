@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<? include "db_config.php"; ?>
+<?
+$data=@mysql_fetch_array(mysql_query("select * from company  where no=$no"));
+?>
+<note>
+  <company><?=$data[company]?></company>
+
+</note>

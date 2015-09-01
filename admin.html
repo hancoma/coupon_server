@@ -1,0 +1,188 @@
+<? $code=time(); ?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+ <link rel="stylesheet" href="css/uikit.min.css" />
+
+    <script src="js/uikit.js"></script>
+ <link rel="stylesheet" href="css/components/slider.gradient.css" />
+  <link rel="stylesheet" href="css/components/slidenav.gradient.css" />
+      <script src="js/components/upload.js"></script>
+   <script src="js/components/lightbox.js"></script>
+    
+      
+              <script src="js/jquery.blockUI.js"></script>
+              <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zip').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('address').value = fullRoadAddr;
+                document.getElementById('address2').value = data.jibunAddress;
+
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    //예상되는 도로명 주소에 조합형 주소를 추가한다.
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    document.getElementById('guide').innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    document.getElementById('guide').innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+
+                } else {
+                    document.getElementById('guide').innerHTML = '';
+                }
+            }
+        }).open();
+    }
+</script>
+
+<!-- This is the button toggling the off-canvas sidebar -->
+<div class="uk-grid" >
+    <div class="uk-width-1-1" id="contents">
+<div class="uk-width-medium-8-10 uk-container-center">
+                                <div class="uk-panel uk-panel-box uk-panel-box-primary">쿠폰 모아 관리자 모드</div>
+                            </div>
+    </div>
+    <div class="uk-width-1-1">
+    <div class="uk-width-medium-8-10 uk-container-center">
+                                <div class="uk-panel uk-panel-box uk-panel-box-success">업체등록</div>
+                                <div class="uk-button uk-width-1-1 uk-button-success" data-uk-offcanvas="{target:'#my-id'}">메뉴열기</div>
+                            </div>
+    </div>
+    <div class="uk-width-1-1">
+    <div class="uk-width-medium-8-10 uk-container-center">
+
+<div id="upload-drop" class="uk-placeholder uk-text-center">
+                                <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 업체 사진을 등록해주세요. <a class="uk-form-file">파일을 올려 놓으세요.<input id="upload-select" type="file" ></a>.
+                            </div>
+<div id="progressbar" class="uk-progress" >
+                                <div class="uk-progress-bar" >100%</div>
+                            </div>
+
+    </div>
+    </div>
+ <div class="uk-width-1-1">
+    <div class="uk-width-medium-8-10 uk-container-center">
+    <form class="uk-form" name="company_form">
+    <input name="code" id="code" value="<?=$code?>">
+    <table class="uk-table">
+    <tr><th>업체명</th><td><input name="company" value="" placeholder="업체명" id="company" class="uk-width-1-1"></td></tr>
+    <tr><th>전화번호</th><td><input name="telephone" value="" id="telephone"  placeholder="전화번호" class="uk-width-1-1"></td></tr>
+    <tr><th>우편번호</th><td><input name="zip" value="" id="zip" class="uk-width-3-10"><span class="uk-button" onclick="sample4_execDaumPostcode()" >우편번호</span></td></tr>
+    <tr><th>주소</th><td><input name="address" value="" id="address" class="uk-width-1-1"></td></tr>
+    <tr><th>상세주소</th><td><input name="address2" value="" id="address2" class="uk-width-1-1"></td></tr>
+    <tr><th>예상지번</th><td><span id="guide" style="color:#999"></span></td>
+    <tr><th>종류</th><td><select name="category" value="" id="category" class="uk-width-1-1">
+    <option value="1">치킨</option>
+    <option value="2">피자/양식</option>
+    <option value="3">중국집</option>
+    <option value="4">족발 / 보쌈</option>
+    <option value="5">야식</option>
+    <option value="6">분식</option>
+    <option value="7">프랜차이즈</option>
+
+    
+    </select></td></tr>
+    <tr><th>영업시간</th><td><input name="time" value="" id="time" class="uk-width-1-1"></td></tr>
+    <tr><th>결제방법</th><td><input name="pay" value="" id="pay" class="uk-width-1-1"></td></tr>
+    <tr><th>포인트</th><td><input name="point" value="" id="point" class="uk-width-1-1"></td></tr>
+    <tr><th>주요메뉴</th><td>
+<textarea name="menu_contents" id="menu_contents" class="uk-width-1-1"></textarea>
+</td></tr>
+ <tr><th>맵</th><td>
+<textarea name="map" id="map" class="uk-width-1-1"></textarea>
+</td></tr>
+    </table>
+    </form>
+    </div>
+    </div>
+    <div class="uk-width-medium-8-10 uk-container-center">
+    <a class="uk-button uk-width-1-1" id="save_btn">저장하기</a>
+    </div>
+
+</div>
+
+<div id="my-id" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <div class="uk-panel">
+
+  <? include "area.php"; ?>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(function(){
+
+
+        var progressbar = $("#progressbar"),
+            bar         = progressbar.find('.uk-progress-bar'),
+            settings    = {
+
+            action: '/coupon/upload.php', // upload url
+            param : 'file',
+            allow : '*.(jpg|jpeg|gif|png)', // allow only images
+            single : false,
+            params : {
+              code:'<?=$code?>'
+            },
+            loadstart: function() {
+                bar.css("width", "0%").text("0%");
+                progressbar.removeClass("uk-hidden");
+            },
+
+            progress: function(percent) {
+                percent = Math.ceil(percent);
+                bar.css("width", percent+"%").text(percent+"%");
+            },
+
+            allcomplete: function(response) {
+
+                bar.css("width", "100%").text("100%");
+
+                setTimeout(function(){
+                    progressbar.addClass("uk-hidden");
+                }, 250);
+
+                UIkit.modal.alert("업로드 되었습니다.");
+            }
+        };
+
+        var select = UIkit.uploadSelect($("#upload-select"), settings),
+            drop   = UIkit.uploadDrop($("#upload-drop"), settings);
+    });
+
+</script>
+ <script src="js/coupon.js"></script>
